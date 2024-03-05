@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import ShoppingCart from './Shoppingcart';
 
 function App() {
   return (
-   <h1>hello world</h1>
+   <ShoppingCart />
   );
 }
 

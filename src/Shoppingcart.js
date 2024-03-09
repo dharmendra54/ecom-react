@@ -1,4 +1,5 @@
 import React from 'react'
+import {useState, useMemo} from "react";
 
 export default function ShoppingCart() {
     let products=[
@@ -10,22 +11,43 @@ export default function ShoppingCart() {
         {name:"Velvet cake", price:450, image:"/ecom-react/images/velvet.jpg"},
     ];
 
-     return (
-    <div>
-        <center><h1>Bakery</h1></center>
-        <div className='main1'>
-            {products.map((value,index)=>(
-                <div class="container">
-                    <div><img src={value.image} width={175} height={150} alt='fruitimg'></img></div>
-                    <div id="fname">{value.name}</div>
-                    <div>{value.description}</div>
-                    <div>{value.price}</div>
-                    <div><button id="btn" onclick="addCart(${index})">ADD</button></div>
-                </div> 
 
-                ))
-            }
-        </div>
-    </div>
-  )
+    const [cart, setCart] = useState([]);
+    const [count, setCount] = useState(1);
+
+    const addCart = (product) => {
+        setCart((prevCart) => [...prevCart, product]);
+    }
+    
+    return (
+        <>
+            <div>
+                <center><h1>Bakery</h1></center>
+                <div className='main1'>
+                    {products.map((value,index)=>(
+                    <div key={index} class="container">
+                    <div><img src={value.image} width={175} height={150}></img></div>
+                    <div id="fname">{value.name}</div>
+                    <div>{value.price}</div>
+                    <div><button id="btn" onClick={() => addCart(value)}>ADD</button></div>
+                    </div> 
+                    ))
+                    }
+                    </div>
+                </div>
+            <div>
+                {cart &&
+                cart.map((value, index) => (
+                <div key={index}>
+                    <div><img src={value.image} width={175} height={150}></img></div>
+                    <div id="fname">{value.name}</div>
+                    <div>{value.price}</div>
+                    <button onClick={() => setCount((prevState) => prevState - 1)}>-</button>
+                    <span>{count}</span>
+                    <button onClick={() => setCount((prevState) => prevState + 1)}>+</button>
+                </div>
+                ))}
+            </div>
+        </>
+    )
 }
